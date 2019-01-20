@@ -10,7 +10,7 @@
 
 ## DEMO
 
-DEMO of the project is live [here](https://np00018.azurewebsites.net).
+DEMO of the project is live [here](https://np000018.azurewebsites.net).
 
 ## Screenshots
 
