@@ -10,4 +10,4 @@ projectenv/
 # db.sqlite3
 _old_db.sqlite3
 
-settings/production.py
+production.py
