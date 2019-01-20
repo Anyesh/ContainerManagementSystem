@@ -1,0 +1,6 @@
+{% load staticfiles %}
+{% if request.user.is_superuser %}
+  {% include 'main/snippets/adminnav.html' %}
+{% else %}
+  {% include 'main/snippets/normienav.html' %}
+{% endif %}
