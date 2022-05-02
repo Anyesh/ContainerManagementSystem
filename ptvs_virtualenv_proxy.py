@@ -32,16 +32,14 @@ else:
 
 def log(txt):
     """Logs fatal errors to a log file if WSGI_LOG env var is defined"""
-    log_file = os.environ.get('WSGI_LOG')
-    if log_file:
+    if log_file := os.environ.get('WSGI_LOG'):
         f = open(log_file, 'a+')
         try:
-            f.write('%s: %s' % (datetime.datetime.now(), txt))
+            f.write(f'{datetime.datetime.now()}: {txt}')
         finally:
             f.close()
 
-ptvsd_secret = os.getenv('WSGI_PTVSD_SECRET')
-if ptvsd_secret:
+if ptvsd_secret := os.getenv('WSGI_PTVSD_SECRET'):
     log('Enabling ptvsd ...\n')
     try:
         import ptvsd
@@ -104,14 +102,11 @@ def get_venv_handler():
     import site
     sys.executable = activate_this
     old_sys_path, sys.path = sys.path, []
-    
-    site.main()
-    
-    sys.path.insert(0, '')
-    for item in old_sys_path:
-        if item not in sys.path:
-            sys.path.append(item)
 
+    site.main()
+
+    sys.path.insert(0, '')
+    sys.path.extend(item for item in old_sys_path if item not in sys.path)
     log('Getting handler %s\n' % os.getenv('WSGI_ALT_VIRTUALENV_HANDLER'))
     handler = get_wsgi_handler(os.getenv('WSGI_ALT_VIRTUALENV_HANDLER'))
     log('Got handler: %r\n' % handler)

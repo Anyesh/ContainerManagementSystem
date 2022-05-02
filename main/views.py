@@ -17,10 +17,9 @@ def addCountry(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Country added successfully.')
-            return HttpResponseRedirect(reverse('add-container'))
         else:
             messages.error(request, 'There was an error!!')
-            return HttpResponseRedirect(reverse('add-container'))
+        return HttpResponseRedirect(reverse('add-container'))
     else:
         form = AddCountryForm(None)
         ctx = {"form": form}
@@ -40,10 +39,10 @@ class AddContainer(View):
         if form.is_valid():
             form.save()
             messages.success(request, 'Container added successfully.')
-            return HttpResponseRedirect(reverse('add-container'))
         else:
             messages.error(request, 'Container ID Should be unique. Choose different one.')
-            return HttpResponseRedirect(reverse('add-container'))
+
+        return HttpResponseRedirect(reverse('add-container'))
 
 
 def viewContainers(request):
@@ -104,10 +103,10 @@ def deleteContainer(request, cid):
         container = Container.objects.get(cid=cid)
         container.delete()
         messages.success(request, 'Container Deleted!')
-        return HttpResponseRedirect(reverse('view-containers'))
     else:
         messages.error(request, 'Not Authorized to Delete!')
-        return HttpResponseRedirect(reverse('view-containers'))
+
+    return HttpResponseRedirect(reverse('view-containers'))
 
 
 def confirmBook(request, cid, bid):
@@ -119,10 +118,10 @@ def confirmBook(request, cid, bid):
         container.departed = True
         container.save()
         messages.success(request, 'Booking confirmed and Container departed!')
-        return HttpResponseRedirect(reverse('view-containers'))
     else:
         messages.error(request, 'There was an error!')
-        return HttpResponseRedirect(reverse('view-containers'))
+
+    return HttpResponseRedirect(reverse('view-containers'))
 
 
 def confirmArrival(request, cid, bid):
@@ -134,10 +133,10 @@ def confirmArrival(request, cid, bid):
         container.received = True
         container.save()
         messages.success(request, 'Arrival confirmed !')
-        return HttpResponseRedirect(reverse('my-bookings'))
     else:
         messages.error(request, 'There was an error!')
-        return HttpResponseRedirect(reverse('my-bookings'))
+
+    return HttpResponseRedirect(reverse('my-bookings'))
 
 
 
@@ -150,10 +149,10 @@ def deleteBooking(request, bid):
         container.save()
         booking.delete()
         messages.success(request, 'Booking Deleted!')
-        return HttpResponseRedirect(reverse('my-bookings'))
     else:
         messages.error(request, 'Error!!!')
-        return HttpResponseRedirect(reverse('my-bookings'))
+
+    return HttpResponseRedirect(reverse('my-bookings'))
 
 
 
